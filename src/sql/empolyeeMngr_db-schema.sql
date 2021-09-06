@@ -2,8 +2,6 @@ DROP DATABASE IF EXISTS employeeMngr_db;
 CREATE DATABASE employeeMngr_db;
 USE employeeMngr_db;
 
-
-
 CREATE TABLE department (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(30) NOT NULL,
@@ -18,6 +16,7 @@ CREATE TABLE role (
   PRIMARY KEY (id),
   FOREIGN KEY (department_id) REFERENCES department(id)
 );
+
 CREATE TABLE employee (
   id INT NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(30) NOT NULL,
