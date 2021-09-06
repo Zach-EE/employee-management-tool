@@ -1,14 +1,14 @@
 //Array of application functions.
 const commandList = [
-    'View all employees',
+    'View all Employees',
+    'View all Roles',
+    'View all Departments',
+    'Add Employee',
+    'Add Department',
+    'Add job Role',
     'Test',
     'Test',
-    'Test',
-    'Test',
-    'Test',
-    'Test',
-    'Test',
-    'Quit'
+    'Quit',
 ];
 
 module.exports = {commandList}
