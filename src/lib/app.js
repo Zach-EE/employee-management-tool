@@ -17,38 +17,43 @@ const start = () => {
         })
         .then((answer) => {
             if (answer.action === 'Quit'){
-                console.log('quit');
+                quitEmployMngr();
             }else {
                 switch (answer.action) {
                     case commandList.commandList[0]:
-                        console.log(commandList.commandList[0]);
+                        // console.log(commandList.commandList[0]);
                         viewAllEmployees();
                         break;
 
                     case commandList.commandList[1]:
-                        console.log(commandList.commandList[1]);
+                        // console.log(commandList.commandList[1]);
                         viewAllRoles();
                         break;
 
                     case commandList.commandList[2]:
-                        console.log(commandList.commandList[2]);
+                        // console.log(commandList.commandList[2]);
                         viewAllDepartments();
                         break;
 
                     case commandList.commandList[3]:
-                        console.log(commandList.commandList[3]);
+                        // console.log(commandList.commandList[3]);
                         addEmployee();
                         break;
 
                     case commandList.commandList[4]:
-                        console.log(commandList.commandList[4]);
+                        // console.log(commandList.commandList[4]);
                         addDepartment();
                         break;
 
                     case commandList.commandList[5]:
-                        console.log(commandList.commandList[5]);
+                        // console.log(commandList.commandList[5]);
                         addRole();
                         break;
+
+                    case commandList.commandList[6]:
+                        // console.log(commandList.commandList[6]);
+                        updateEmployeeRole();;
+                        break;                 
                 }
             }
             
@@ -227,7 +232,7 @@ const addRole = async () => {
                     {
                         name: "roleSalary",
                         type: "input",
-                        message: "Enter Salary for Role (ex. $80000)...",
+                        message: "Enter Salary for Role (ex. 80000)...",
                     },
                     {
                         name: "roleDeptId",
@@ -269,5 +274,75 @@ const addRole = async () => {
         console.log(err);
     }
 }
+//* Update DB Functions
 
+const updateEmployeeRole = async () => {
+    try {
+        const promptUser = () => {
+            return inquirer
+                .prompt([
+                    {
+                        name: "empID",
+                        type: "rawlist",
+                        choices: function () {
+                            const choiceArray = [];
+                            emps.forEach((emp) => {
+                                const empObj = {
+                                    name: `${emp.firstname} ${emp.lastname}`,
+                                    value: emp.id
+                                    }
+                                    choiceArray.push(empObj)
+                                })
+                                return choiceArray;
+                            },
+                            message: "Select Employee to Update..."
+
+                    },
+                    {
+                        name: "empRoleId",
+                        type: "rawlist",
+                        choices: function () {
+                            const choiceArray = [];
+                            roles.forEach((role) => {
+                                const roleObj = {
+                                    name: role.title,
+                                    value: role.id
+                                }
+                                choiceArray.push(roleObj)
+                            })
+                            return choiceArray;
+                        },
+                        message: "Select New Role..."
+                    }
+                ])
+                .then((answer) => {
+                    connection.query(
+                        queries.updateEmployeeRole,
+                        [
+                            {
+                                role_id: answer.empRoleId
+                            },
+                            {
+                                id: answer.empID
+                            }
+                        ],
+                        (err) => {
+                            if (err) throw err;
+                            console.log(`Success: Employee job Role Updated...`);
+                            start();
+                        });
+                });
+        }
+        const emps = await getEmployees();
+        const roles = await getRoles();
+        await promptUser();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const quitEmployMngr = () => {
+    console.log(`Thank you for using the Employee Manager Tool!\n GOODBYE....`);
+    return connection.end();
+}
 module.exports ={start};

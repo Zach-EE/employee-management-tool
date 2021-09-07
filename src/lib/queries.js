@@ -17,6 +17,8 @@ const queries = {
     addDepartment: fs.readFileSync(path.join(__dirname, '../sql/addDepartment.sql')).toString(),
 
     addRole: fs.readFileSync(path.join(__dirname, '../sql/addRole.sql')).toString(),
+
+    updateEmployeeRole: fs.readFileSync(path.join(__dirname, '../sql/updateEmployee.sql')).toString(),
     
 
 }
