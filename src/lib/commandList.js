@@ -6,8 +6,7 @@ const commandList = [
     'Add Employee',
     'Add Department',
     'Add job Role',
-    'Test',
-    'Test',
+    'Update Employee Job Role',
     'Quit',
 ];
 

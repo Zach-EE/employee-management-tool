@@ -39,6 +39,16 @@ const start = () => {
                         console.log(commandList.commandList[3]);
                         addEmployee();
                         break;
+
+                    case commandList.commandList[4]:
+                        console.log(commandList.commandList[4]);
+                        addDepartment();
+                        break;
+
+                    case commandList.commandList[5]:
+                        console.log(commandList.commandList[5]);
+                        addRole();
+                        break;
                 }
             }
             
@@ -90,6 +100,7 @@ const viewAllEmployees = async () => {
         console.log(err);
     }
 }
+
 //* Add to DB Functions:
 const addEmployee = async () => {
     try {
@@ -157,7 +168,7 @@ const addEmployee = async () => {
                         },
                         (err) => {
                             if (err) throw err;
-                            console.log(`The new employee ${answer.empFirstName} ${answer.empLastName} was added successfully!`);
+                            console.log(`Success: Employee  ${answer.empFirstName} ${answer.empLastName} was added to DB`);
                             start();
                         });
                 });
@@ -168,6 +179,92 @@ const addEmployee = async () => {
         const managers = await getManagers();
         await promptUser();
 
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const addDepartment = async () => {
+    try {
+        const promptUser = () => {
+            return inquirer
+                .prompt([
+                    {
+                        name: "deptName",
+                        type: "input",
+                        message: "Please Enter New Department Name...",
+                    }
+                ])
+                .then((answer) => {
+                    connection.query(
+                        queries.addDepartment,
+                        {
+                            name: answer.deptName
+                        },
+                        (err) => {
+                            if (err) throw err;
+                            console.log(`Success: ${answer.deptName} department added to db...\n`);
+                            start();
+                        });
+                });
+        }
+        await promptUser();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const addRole = async () => {
+    try {
+        const promptUser = () => {
+            return inquirer
+                .prompt([
+                    {
+                        name: "roleTitle",
+                        type: "input",
+                        message: "Enter Role Title...",
+                    },
+                    {
+                        name: "roleSalary",
+                        type: "input",
+                        message: "Enter Salary for Role (ex. $80000)...",
+                    },
+                    {
+                        name: "roleDeptId",
+                        type: "rawlist",
+                        choices: function () {
+                            const choiceArray = [];
+                            depts.forEach((dept) => {
+                                const deptObj = {
+                                    name: dept.department_name,
+                                    value: dept.id
+                                }
+                                choiceArray.push(deptObj)
+                            })
+                            return choiceArray;
+                        },
+                        message: "What Department is Role in?..."
+
+                    }
+                ])
+                .then((answer) => {
+                    connection.query(
+                        queries.addRole,
+                        {
+                            title: answer.roleTitle,
+                            salary: answer.roleSalary,
+                            department_id: answer.roleDeptId
+                        },
+                        (err) => {
+                            if (err) throw err;
+                            console.log(`Success: New Role ${answer.role} added to ${answer.roleDeptId}`);
+                            start();
+                        }
+                    )
+                })
+        }
+        const depts = await getDepartment();
+        await promptUser();
     } catch (err) {
         console.log(err);
     }
