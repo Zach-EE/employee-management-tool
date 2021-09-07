@@ -22,14 +22,14 @@
 * Initialize Employee Management Tool
 * Management Tool has Following Features:
 
-    - View All Employees *shows employee data table to user*
-    - View All Roles *shows all employee job roles in db*
-    - View All Departments *shows all employee departments in db*
-    - Add Employee *allows user to add Employee info to db (name, role, manager, managerName)*
-    - Add Department *allows user to add department to db*
-    - Add Job Role *allows new job role to be added with department and salary*
-    - Update Employee Job Role *allows user to update employee role in DB*
-    - Quit *exits application*
+    - View All Employees: *shows employee data table to user*
+    - View All Roles: *shows all employee job roles in db*
+    - View All Departments: *shows all employee departments in db*
+    - Add Employee: *allows user to add Employee info to db (name, role, manager, managerName)*
+    - Add Department: *allows user to add department to db*
+    - Add Job Role: *allows new job role to be added with department and salary*
+    - Update Employee Job Role: *allows user to update employee role in DB*
+    - Quit: *exits application*
 
 
 ## Contact
