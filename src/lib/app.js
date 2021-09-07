@@ -1,9 +1,11 @@
+// DB connection config file
 const connection = require('../config/config');
+
+const queries = require('./queries');
+const commandList = require('./commandList');
 const consoleTable = require('console.table');
 const inquirer = require('inquirer');
-const commandList = require('./commandList');
-const queries = require('./queries');
-
+// allows for promises to be used with connection.query
 const util = require("util");
 const query = util.promisify(connection.query).bind(connection);
 
@@ -53,7 +55,8 @@ const start = () => {
                     case commandList.commandList[6]:
                         // console.log(commandList.commandList[6]);
                         updateEmployeeRole();;
-                        break;                 
+                        break;
+                    // TODO: ADD ADDITIONAL OPTIONS BY UPDATING commandList.js and following case convention                 
                 }
             }
             
@@ -61,7 +64,7 @@ const start = () => {
 
         
 }
-// All DB queries for application
+//* DB queries for application
 const getEmployees = () => {
     return query(queries.viewAllEmployees);
 }
@@ -76,6 +79,7 @@ const getManagers = () => {
 }
 
 //* View Functions
+// viewAllDepartments: shows user table of all departments in company
 const viewAllDepartments = async () => {
     try {
         const rows = await getDepartment();
@@ -85,7 +89,7 @@ const viewAllDepartments = async () => {
         console.log(err);
     }
 }
-
+// viewAllRoles: shows user table of all employee roles and departments
 const viewAllRoles = async () => {
     try {
         const rows = await getRoles();
@@ -95,7 +99,7 @@ const viewAllRoles = async () => {
         console.log(err);
     }
 }
-
+// viewAllEmployees: shows users employee table with employee profile data
 const viewAllEmployees = async () => {
     try {
         const rows = await getEmployees();
@@ -188,7 +192,6 @@ const addEmployee = async () => {
         console.log(err);
     }
 }
-
 const addDepartment = async () => {
     try {
         const promptUser = () => {
@@ -218,7 +221,6 @@ const addDepartment = async () => {
         console.log(err);
     }
 }
-
 const addRole = async () => {
     try {
         const promptUser = () => {
@@ -275,7 +277,7 @@ const addRole = async () => {
     }
 }
 //* Update DB Functions
-
+// updateEmployeeRole: allows user to pick from list of employees and update role in db
 const updateEmployeeRole = async () => {
     try {
         const promptUser = () => {
@@ -341,6 +343,8 @@ const updateEmployeeRole = async () => {
     }
 }
 
+// TODO: add features to updateDepartments, updateRoles, deleteEmp, deleteDepartment...etc
+//* Exit application
 const quitEmployMngr = () => {
     console.log(`Thank you for using the Employee Manager Tool!\n GOODBYE....`);
     return connection.end();

@@ -1,3 +1,4 @@
+// DB queries paths found here
 const path = require('path');
 const fs = require('fs');
 
@@ -12,7 +13,6 @@ const queries = {
     viewAllManagers: fs.readFileSync(path.join(__dirname, '../sql/viewAllManagers.sql')).toString(),
 
     addEmployee: fs.readFileSync(path.join(__dirname, '../sql/addEmployee.sql')).toString(),
-
 
     addDepartment: fs.readFileSync(path.join(__dirname, '../sql/addDepartment.sql')).toString(),
 

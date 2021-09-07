@@ -1,10 +1,8 @@
 const connection = require('./src/config/config');
 const commands = require('./src/lib/app');
 
-
-
 const init = async () => {
-    console.log(`
+    console.log(`\n\n\n
         ╔═══╗─────╔╗──────────────╔═╗╔═╗
         ║╔══╝─────║║──────────────║║╚╝║║
         ║╚══╦╗╔╦══╣║╔══╦╗─╔╦══╦══╗║╔╗╔╗╠══╦═╗╔══╦══╦══╦═╗
@@ -22,7 +20,6 @@ const init = async () => {
         console.log(err);
     }
 }
-
 connection.connect((err) => {
     if(err) throw (err);
     init();
